@@ -9,5 +9,3 @@
 - Ruziali "Ruiz" Ruzimatov
 
 ## Goal
-
-

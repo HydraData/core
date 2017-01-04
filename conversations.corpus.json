@@ -1,0 +1,68 @@
+{
+   "conversations":[
+      [
+         "Hello",
+         "Hi, how can I help you?",
+         "How to take a loan?",
+         "You have to go to the bank and sign an agreement. Pay attention to an interest rate, if it's above 20% it's not good for you, calculate monthly pay. Monthly pay should not be greater than half of your salary.",
+         "Thanks",
+         "You are welcome"
+      ],
+      [
+         "Hi",
+         "Hi, how can I help you?",
+         "How to save money?",
+         "Ok, let's see. Try paying attention to minor expenses, such as: transportation, lunch, cigarettes, coffee. Buying coffee every day for 120 som makes you to spend ~43800 som, if you will drink coffee every second day you will save half of this amount",
+         "Thanks",
+         "You are welcome"
+      ],
+      [
+         "Hi",
+         "Hi, how can I help you?",
+         "What is microfinance?",
+         "Microfinance is the term used for the provision of financial services to the working poor. Currently, microfinance loans are aiding 160 million people around the globe.",
+         "Thanks",
+         "You are welcome"
+      ],
+      [
+         "Hi",
+         "Hi, how can I help you?",
+         "What is the difference between microfinance and microcredit?",
+         "Getting a loan from a bank can be extremely difficult for someone with little cash income. Microcredit is a loan to the microentrepreneur by an MFI (microfinance institution). Microcredit is one component of microfinance.  Other growing services include microsavings, microinsurance, and financial training programs offered by a number of MFIs.",
+         "Thanks",
+         "You are welcome"
+      ],
+      [
+         "Hi",
+         "Hi, how can I help you?",
+         "Why are the interest rates so high?",
+         "Microfinance interest rates vary greatly by region and market and average 35% globally. This might seem crazy; however, there are a lot of unseen risks and costs of sustaining an MFI. Because the loans are typically for small amounts, MFIs need to charge interest to cover administrative costs. If you think about it, giving a $1000 loan requires the same amount of employee attention as a $25 loan. Giving a large number of small loans is time intensive with smaller returns and administrative costs are around 10-25% of total loans given. MFIs take on risk by giving collateral-free loans. Well-established MFIs still lose about 1-2% of their loans. Without physical assets to secure the loan, there is no guarantee and the interest rates help to compensate for that risk. Inflation and currency exchange fluctuation rates also play into this problem. For example, in Nepal, the rupee has slowly been losing value against the dollarwhile annual inflation rates can reach double-digits. Each subsequent month the borrowers pay a portion of their loans, its value decreases against the currency in which may MFIs receive funding. In order for an MFI to grow, the need additional operational margins (around 5-15%) to compensate for the losses incurred by inflation and currency exchange fluctuation.",
+         "Thanks",
+         "You are welcome"
+      ],
+      [
+         "Hi",
+         "Hi, how can I help you?",
+         "What is an MFI?",
+         "A MFI is a microfinance institution that provides the microcredit and financial services to microentrepreneurs.",
+         "Thanks",
+         "You are welcome"
+      ],
+      [
+         "Hi",
+         "Hi, how can I help you?",
+         "Are all MFIs non-profit?",
+         "Many MFIs began as a non-profit providers; however, a for-profit sector has developedmore recently. For-profit MFIs have draw on large investments which allow them to distribute more funds by sometimes more efficient means. The challenge for many for-profit MFIs is achieving a balance between financial sustainability and the poverty-alleviation mission of the microfinance sector. At OneSeed, all our partners have been carefully selected because they meet our criteria and they all also happen to be non-profit MFIs.",
+         "Thanks",
+         "You are welcome"
+      ],
+      [
+         "Hi",
+         "Hi, how can I help you?",
+         "What are some of the risks or controversies?",
+         "The provision of financial services is neither without risk nor controversy.  As the field of microfinance has grown and evolved, predatory lending practices and a lack of risk management by a small number of MFIs have raised important and fundamental critiques of lending practices.",
+         "Thanks",
+         "You are welcome"
+      ]
+   ]
+}
