@@ -1,47 +1,58 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove)
+import json
 from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters, RegexHandler,
                           ConversationHandler)
 import logging
-
+from pymongo import MongoClient
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 
 logger = logging.getLogger(__name__)
 
+client = MongoClient()
+db = client.hydradata
+
 INCOME, SOCIAL_STATUS, GENDER, CREDIT_EXP, SAVE_MONEY = range(5)
 
 
 def start(bot, update):
+    if db.profiles.find({"profile_id": update['message']['chat']['id']}).count() == 0:
+        db.profiles.insert_one({"profile_id": update['message']['chat']['id']})
+        print 'wrote to database'
+
     update.message.reply_text('Hi, in order to help you I need some basic information')
     update.message.reply_text('What is your monthly income in Kyrgyz soms?')
     return INCOME
 
 def income(bot, update):
     user = update.message.from_user
+    db.profiles.update_one({"profile_id": update['message']['chat']['id']},{"$set": {"monthly_income": update.message.text}})
     update.message.reply_text('Are you married?')
     return SOCIAL_STATUS
 
 def social_status(bot, update):
     user = update.message.from_user
-    update.message.reply_text('Are you a boy or a girl?')
+    db.profiles.update_one({"profile_id": update['message']['chat']['id']},{"$set": {"social_status": update.message.text}})
+    update.message.reply_text('Are you male or female?')
     return GENDER
 
 def gender(bot, update):
     user = update.message.from_user
+    db.profiles.update_one({"profile_id": update['message']['chat']['id']},{"$set": {"gender": update.message.text}})
     update.message.reply_text('Rate your previous credit experience from 1 to 5 (0 if you have no experience)')
     return CREDIT_EXP
 
 def credit_exp(bot, update):
     user = update.message.from_user
+    db.profiles.update_one({"profile_id": update['message']['chat']['id']},{"$set": {"credit_exp": update.message.text}})
     update.message.reply_text('Rate how good you save your money from 1 to 5 (0 if you do not save)')
     return SAVE_MONEY
 
 def save_money(bot, update):
     user = update.message.from_user
+    db.profiles.update_one({"profile_id": update['message']['chat']['id']},{"$set": {"save_money": update.message.text}})
     update.message.reply_text('Seems like i can make a desicion already')
     return ConversationHandler.END
 
