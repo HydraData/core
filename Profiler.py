@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 client = MongoClient()
 db = client.hydradata
 
-INCOME, SOCIAL_STATUS, GENDER, CREDIT_EXP, SAVE_MONEY = range(5)
+INCOME, SOCIAL_STATUS, GENDER, CREDIT_EXP, SAVE_MONEY, AGE = range(6)
 
 
 def start(bot, update):
@@ -41,6 +41,12 @@ def social_status(bot, update):
 def gender(bot, update):
     user = update.message.from_user
     db.profiles.update_one({"profile_id": update['message']['chat']['id']},{"$set": {"gender": update.message.text}})
+    update.message.reply_text('How old are you?')
+    return AGE
+
+def age(bot, update):
+    user = update.message.from_user
+    db.profiles.update_one({"profile_id": update['message']['chat']['id']},{"$set": {"age": update.message.text}})
     update.message.reply_text('Rate your previous credit experience from 1 to 5 (0 if you have no experience)')
     return CREDIT_EXP
 
@@ -84,6 +90,7 @@ def main():
             INCOME: [MessageHandler(Filters.text, income)],
             SOCIAL_STATUS: [MessageHandler(Filters.text, social_status)],
             GENDER: [MessageHandler(Filters.text, gender)],
+            AGE: [MessageHandler(Filters.text, age)],
             CREDIT_EXP: [MessageHandler(Filters.text, credit_exp)],
             SAVE_MONEY: [MessageHandler(Filters.text, save_money)]
         },
