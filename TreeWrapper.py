@@ -1,4 +1,3 @@
-from sklearn.datasets import load_iris
 from sklearn.cross_validation import train_test_split
 from sklearn.tree import DecisionTreeRegressor
 from sklearn import tree
