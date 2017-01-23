@@ -5,6 +5,10 @@ from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters, Rege
                           ConversationHandler)
 import logging
 from pymongo import MongoClient
+
+import TreeWrapper as tw
+tw.build_tree("ProfileDataset", "save_money")
+
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -60,6 +64,13 @@ def save_money(bot, update):
     user = update.message.from_user
     db.profiles.update_one({"profile_id": update['message']['chat']['id']},{"$set": {"save_money": update.message.text}})
     update.message.reply_text('Seems like i can make a desicion already')
+    monthly_income = db.profiles.find_one({"profile_id": update['message']['chat']['id']})["monthly_income"]
+    social_status = db.profiles.find_one({"profile_id": update['message']['chat']['id']})["social_status"]
+    gender = db.profiles.find_one({"profile_id": update['message']['chat']['id']})["gender"]
+    age = db.profiles.find_one({"profile_id": update['message']['chat']['id']})["age"]
+    credit_exp = db.profiles.find_one({"profile_id": update['message']['chat']['id']})["credit_exp"]
+    
+    update.message.reply_text(tw.clf.predict([[monthly_income,social_status,gender,age,credit_exp]])[0])
     return ConversationHandler.END
 
 def cancel(bot, update):
