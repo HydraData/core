@@ -33,13 +33,15 @@ def start(bot, update):
 def income(bot, update):
     user = update.message.from_user
     db.profiles.update_one({"profile_id": update['message']['chat']['id']},{"$set": {"monthly_income": update.message.text}})
-    update.message.reply_text('Are you married?')
+    reply_keyboard = [['Yes', 'No', 'Other']]
+    update.message.reply_text('Are you married?',reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
     return SOCIAL_STATUS
 
 def social_status(bot, update):
     user = update.message.from_user
     db.profiles.update_one({"profile_id": update['message']['chat']['id']},{"$set": {"social_status": update.message.text}})
-    update.message.reply_text('Are you male or female?')
+    reply_keyboard = [['Male', 'Female', 'Other']]
+    update.message.reply_text('Are you male or female?',reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
     return GENDER
 
 def gender(bot, update):
