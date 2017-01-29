@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import json
+from telegram import ReplyKeyboardMarkup
 from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters, RegexHandler,
                           ConversationHandler)
 import logging
@@ -33,18 +34,22 @@ def start(bot, update):
 def income(bot, update):
     user = update.message.from_user
     db.profiles.update_one({"profile_id": update['message']['chat']['id']},{"$set": {"monthly_income": update.message.text}})
-    update.message.reply_text('Are you married?')
+    reply_keyboard = [['Yes', 'No', 'Other']]
+    update.message.reply_text('Are you married?',reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
     return SOCIAL_STATUS
 
 def social_status(bot, update):
     user = update.message.from_user
-    db.profiles.update_one({"profile_id": update['message']['chat']['id']},{"$set": {"social_status": update.message.text}})
-    update.message.reply_text('Are you male or female?')
+    bool_answer = 1 if update.message.text == "Yes" else 0 #we have yes or no as an answer, so we convert it to bool 1 or 0 respectively
+    db.profiles.update_one({"profile_id": update['message']['chat']['id']},{"$set": {"social_status": bool_answer}})
+    reply_keyboard = [['Male', 'Female']]
+    update.message.reply_text('Are you male or female?',reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
     return GENDER
 
 def gender(bot, update):
     user = update.message.from_user
-    db.profiles.update_one({"profile_id": update['message']['chat']['id']},{"$set": {"gender": update.message.text}})
+    bool_answer = 1 if update.message.text == "Male" else 0 #we have Male or Female as an answer, so we convert it to bool 1 or 0 respectively
+    db.profiles.update_one({"profile_id": update['message']['chat']['id']},{"$set": {"gender": bool_answer}})
     update.message.reply_text('How old are you?')
     return AGE
 
@@ -70,6 +75,7 @@ def save_money(bot, update):
     age = db.profiles.find_one({"profile_id": update['message']['chat']['id']})["age"]
     credit_exp = db.profiles.find_one({"profile_id": update['message']['chat']['id']})["credit_exp"]
     
+    update.message.reply_text("Here is your rating for financial literacy (minimum is 1, maximum is 5)")
     update.message.reply_text(tw.clf.predict([[monthly_income,social_status,gender,age,credit_exp]])[0])
     return ConversationHandler.END
 
