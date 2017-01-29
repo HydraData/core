@@ -75,6 +75,7 @@ def save_money(bot, update):
     age = db.profiles.find_one({"profile_id": update['message']['chat']['id']})["age"]
     credit_exp = db.profiles.find_one({"profile_id": update['message']['chat']['id']})["credit_exp"]
     
+    update.message.reply_text("Here is your rating for financial literacy (minimum is 1, maximum is 5)")
     update.message.reply_text(tw.clf.predict([[monthly_income,social_status,gender,age,credit_exp]])[0])
     return ConversationHandler.END
 
