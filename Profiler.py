@@ -19,16 +19,30 @@ logger = logging.getLogger(__name__)
 client = MongoClient()
 db = client.hydradata
 
-INCOME, SOCIAL_STATUS, GENDER, CREDIT_EXP, SAVE_MONEY, AGE = range(6)
+INCOME, SOCIAL_STATUS, GENDER, CREDIT_EXP, SAVE_MONEY, AGE, ROUTER, PROFILE, BUY = range(9)
 
 
 def start(bot, update):
     if db.profiles.find({"profile_id": update['message']['chat']['id']}).count() == 0:
         db.profiles.insert_one({"profile_id": update['message']['chat']['id']})
         print 'wrote to database'
+    update.message.reply_text('Hi, I am you personal assistaint. How can I help you?')
+    return ROUTER
 
-    update.message.reply_text('Hi, in order to help you I need some basic information')
-    update.message.reply_text('What is your monthly income in Kyrgyz soms?')
+def router(buy, update):
+    user_answer = update.message.text;
+    if user_answer == "profile":
+        return PROFILE
+    if user_answer == "buy":
+        return BUY
+
+def buy(buy, update):
+    update.message.reply_text('Anything else?')
+    return ROUTER
+
+def profile(bot, update):
+    update.message.reply_text('Ok, let me ask you several questions in order to form your financial profile')
+    update.message.reply_text('What is your monthly income in KGS?')
     return INCOME
 
 def income(bot, update):
@@ -109,7 +123,10 @@ def main():
             GENDER: [MessageHandler(Filters.text, gender)],
             AGE: [MessageHandler(Filters.text, age)],
             CREDIT_EXP: [MessageHandler(Filters.text, credit_exp)],
-            SAVE_MONEY: [MessageHandler(Filters.text, save_money)]
+            SAVE_MONEY: [MessageHandler(Filters.text, save_money)],
+            ROUTER: [MessageHandler(Filters.text, router)],
+            PROFILE: [MessageHandler(Filters.text, profile)],
+            BUY: [MessageHandler(Filters.text, buy)]
         },
 
         fallbacks=[CommandHandler('cancel', cancel)]
