@@ -31,7 +31,7 @@ def start(bot, update):
     return ROUTER
 
 def router(buy, update):
-    user_answer = aupdate.message.text
+    user_answer = update.message.text
     splitted_user_answer = user_answer.split()
     if splitted_user_answer[0] == "profile":
         return profile(bot, update)
