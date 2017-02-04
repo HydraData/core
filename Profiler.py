@@ -30,7 +30,7 @@ def start(bot, update):
     update.message.reply_text('Hi, I am you personal assistaint. How can I help you?')
     return ROUTER
 
-def router(buy, update):
+def router(bot, update):
     user_answer = update.message.text
     splitted_user_answer = user_answer.split()
     if splitted_user_answer[0] == "profile":
