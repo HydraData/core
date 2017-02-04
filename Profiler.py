@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import datetime
 import json
 from telegram import ReplyKeyboardMarkup
 from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters, RegexHandler,
@@ -30,19 +31,33 @@ def start(bot, update):
     return ROUTER
 
 def router(buy, update):
-    user_answer = update.message.text;
-    if user_answer == "profile":
-        return PROFILE
-    if user_answer == "buy":
-        return BUY
+    user_answer = aupdate.message.text
+    splitted_user_answer = user_answer.split()
+    if splitted_user_answer[0] == "profile":
+        return profile(bot, update)
+    if splitted_user_answer[0] == "buy":
+        return buy(bot, update)
 
-def buy(buy, update):
-    update.message.reply_text('Anything else?')
+def buy(abuy, aupdate):
+    amount = 0
+    currency = ''
+    user_answer = aupdate.message.text
+    splitted_user_answer = user_answer.split()
+    for word in splitted_user_answer:
+        if word.isdigit() is True:
+            amount = word
+        elif word == "kgs":
+            currency = "kgs"
+        elif word == "usd":
+            currency = "usd"
+    db.transactions.insert_one({"profile_id": aupdate['message']['chat']['id'], "date": datetime.datetime.utcnow(),
+     "amount": amount, "currency": currency })
+    aupdate.message.reply_text('Transaction saved')
     return ROUTER
 
-def profile(bot, update):
-    update.message.reply_text('Ok, let me ask you several questions in order to form your financial profile')
-    update.message.reply_text('What is your monthly income in KGS?')
+def profile(abot, aupdate):
+    aupdate.message.reply_text('Ok, let me ask you several questions in order to form your financial profile')
+    aupdate.message.reply_text('What is your monthly income in KGS?')
     return INCOME
 
 def income(bot, update):
@@ -124,9 +139,7 @@ def main():
             AGE: [MessageHandler(Filters.text, age)],
             CREDIT_EXP: [MessageHandler(Filters.text, credit_exp)],
             SAVE_MONEY: [MessageHandler(Filters.text, save_money)],
-            ROUTER: [MessageHandler(Filters.text, router)],
-            PROFILE: [MessageHandler(Filters.text, profile)],
-            BUY: [MessageHandler(Filters.text, buy)]
+            ROUTER: [MessageHandler(Filters.text, router)]
         },
 
         fallbacks=[CommandHandler('cancel', cancel)]
