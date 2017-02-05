@@ -37,8 +37,25 @@ def router(bot, update):
         return profile(bot, update)
     if splitted_user_answer[0] == "buy":
         return buy(bot, update)
+    if splitted_user_answer[0] == "stats":
+        return buy_stats(bot update)
 
-def buy(abuy, aupdate):
+def buy_stats(abot, aupdate):
+    days = 7
+    current_date = datetime.datetime.utcnow()
+    date_range = current_date - datetime.timedelta(days=1)
+    results = db.transactions.group(
+        "key": {
+            "amount": 1
+        },
+        "cond": {
+            "profile_id": aupdate['message']['chat']['id']
+        }
+    )
+    aupdate.message.reply_text('This week you have spent ' + results)
+    return ROUTER
+
+def buy(abot, aupdate):
     amount = 0
     currency = ''
     user_answer = aupdate.message.text
