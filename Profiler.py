@@ -38,21 +38,24 @@ def router(bot, update):
     if splitted_user_answer[0] == "buy":
         return buy(bot, update)
     if splitted_user_answer[0] == "stats":
-        return buy_stats(bot update)
+        return buy_stats(bot, update)
 
 def buy_stats(abot, aupdate):
     days = 7
     current_date = datetime.datetime.utcnow()
     date_range = current_date - datetime.timedelta(days=1)
-    results = db.transactions.group(
-        "key": {
-            "amount": 1
+    pipe = [
+        {
+            '$match': {'profile_id': aupdate['message']['chat']['id']}
         },
-        "cond": {
-            "profile_id": aupdate['message']['chat']['id']
+        { 
+            "$group": {"_id": None, "amount": {"$sum": "$amount"}}
         }
-    )
-    aupdate.message.reply_text('This week you have spent ' + results)
+    ]
+    results = db.transactions.aggregate(pipeline = pipe)
+    aupdate.message.reply_text('Your spendings this week:')
+    for st in list(results):
+        aupdate.message.reply_text(st)
     return ROUTER
 
 def buy(abot, aupdate):
@@ -68,7 +71,7 @@ def buy(abot, aupdate):
         elif word == "usd":
             currency = "usd"
     db.transactions.insert_one({"profile_id": aupdate['message']['chat']['id'], "date": datetime.datetime.utcnow(),
-     "amount": amount, "currency": currency })
+     "amount": int(amount), "currency": str(currency) })
     aupdate.message.reply_text('Transaction saved')
     return ROUTER
 
