@@ -17,7 +17,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 logger = logging.getLogger(__name__)
 
-client = MongoClient()
+client = MongoClient('mongodb://hydra:WeilWirLiebenGewalt@127.0.0.1')
 db = client.hydradata
 
 INCOME, SOCIAL_STATUS, GENDER, CREDIT_EXP, SAVE_MONEY, AGE, ROUTER, PROFILE, BUY = range(9)
