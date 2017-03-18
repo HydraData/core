@@ -30,7 +30,7 @@ print(Y[0])
 model = Sequential()
 model.add(Dense(2, input_dim=2, init='normal', activation='relu'))
 #model.add(Dropout(0.20))
-#model.add(Dense(2, activation='relu'))
+model.add(Dense(13, activation='relu', init='normal'))
 model.add(Dense(13, init='normal', activation='sigmoid'))
 # Compile model
 #model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
