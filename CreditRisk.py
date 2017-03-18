@@ -32,40 +32,88 @@ def start(bot, update):
     return LAUFKONT
 
 def laufkont(bot, update):
+    answer_result = -1
+    if update.message.text == 'no balance or debit':
+    elif update.message.text == '... >= 200 DM or checking account for at least 1 year':
+    elif update.message.text == 'no running account':
     print(update.message.text)
     update.message.reply_text('Duration in months (metric)')
     return LAUFZEIT
 
 def laufzeit(bot, update):
+    answer_result = -1
+    answer_result = update.message.text
     print(update.message.text)
     reply_keyboard = [['<=6', '6 < ... <= 12', '12 < ... <= 18', '18 < ... <= 24', '24 < ... <= 30', '30 < ... <= 36','36 < ... <= 42','42 < ... <= 48','48 < ... <= 54','> 54']]
     update.message.reply_text('Duration in months (categorized)',reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
     return DLAUFZEIT
 
 def dlaufzeit(bot, update):
+    answer_result = -1
+    if update.message.text == '<=6':
+    elif update.message.text == '6 < ... <= 12':
+    elif update.message.text == '12 < ... <= 18':
+    elif update.message.text == '18 < ... <= 24':
+    elif update.message.text == '24 < ... <= 30':
+    elif update.message.text == '30 < ... <= 36':
+    elif update.message.text == '36 < ... <= 42':
+    elif update.message.text == '42 < ... <= 48':
+    elif update.message.text == '48 < ... <= 54':
+    elif update.message.text == '> 54':
     print(update.message.text)
     reply_keyboard = [['no previous credits / paid back all previous credits','paid back previous credits at this bank','no problems with current credits at this bank','hesitant payment of previous credits','problematic running account / there are further credits running but at other banks']]
     update.message.reply_text('Payment of previous credits',reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
     return MORAL
 
 def moral(bot, update):
+    answer_result = -1
+    if update.message.text =='no previous credits / paid back all previous credits':
+    elif update.message.text == 'paid back previous credits at this bank':
+    elif update.message.text == 'no problems with current credits at this bank':
+    elif update.message.text == 'hesitant payment of previous credits':
+    elif update.message.text == 'problematic running account / there are further credits running but at other banks':
     print(update.message.text)
     reply_keyboard = [['new car','used car','items of furniture','radio / television','household appliances','repair','education','vacation','retraining','business','other']]
     update.message.reply_text('Purpose of credit',reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
     return VERW
 
 def verw(bot, update):
+    answer_result = -1
+    if update.message.text == 'new car':
+    elif update.message.text == 'used car':
+    elif update.message.text == 'items of furniture':
+    elif update.message.text == 'radio / television':
+    elif update.message.text == 'household appliances':
+    elif update.message.text == 'repair':
+    elif update.message.text == 'education':
+    elif update.message.text == 'vacation':
+    elif update.message.text == 'retraining':
+    elif update.message.text == 'business':
+    elif update.message.text == 'other':
     print(update.message.text)
     update.message.reply_text('Amount of credit in DM (metric)')
     return HOEHE
 
 def hoehe(bot, update):
+    answer_result = -1
+    answer_result = update.message.text
     print(update.message.text)
     reply_keyboard = [['<=500','500 < ... <= 1000','1000 < ... <= 1500','1500 < ... <= 2500','2500 < ... <= 5000','5000 < ... <= 7500','7500 < ... <= 10000','10000 < ... <= 15000','15000 < ... <= 20000','> 20000']]
     update.message.reply_text('Amount of credit in DM (categorized)',reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
     return DHOEHE
 
 def dhoehe(bot, update):
+    answer_result = -1
+    if update.message.text == '<=500':
+    elif update.message.text == '500 < ... <= 1000':
+    elif update.message.text == '1000 < ... <= 1500':
+    elif update.message.text == '1500 < ... <= 2500':
+    elif update.message.text == '2500 < ... <= 5000':
+    elif update.message.text == '5000 < ... <= 7500':
+    elif update.message.text == '7500 < ... <= 10000':
+    elif update.message.text == '10000 < ... <= 15000':
+    elif update.message.text == '15000 < ... <= 20000':
+    elif update.message.text == '> 20000':
     print(update.message.text)
     reply_keyboard = [['< 100,- DM','100,- <= ... < 500,- DM','500,- <= ... < 1000,- DM','>= 1000,- DM','not available / no savings']]
     update.message.reply_text('Value of savings or stocks',reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))

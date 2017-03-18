@@ -9,7 +9,7 @@ import logging
 from pymongo import MongoClient
 
 import TreeWrapper as tw
-tw.build_tree("ProfileDataset", "save_money")
+tw.build_tree("ProfileDataset", "CLUSTER")
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 client = MongoClient()#'mongodb://hydra:WeilWirLiebenGewalt@127.0.0.1')
 db = client.hydradata
 
-INCOME, SOCIAL_STATUS, GENDER, CREDIT_EXP, SAVE_MONEY, AGE, ROUTER, PROFILE, BUY = range(9)
+INCOME, SOCIAL_STATUS, GENDER, OCCUPATION, SAVE_MONEY, AGE, ROUTER, PROFILE, BUY = range(9)
 
 
 def start(bot, update):
@@ -38,6 +38,8 @@ def router(bot, update):
     if splitted_user_answer[0] == "buy":
         return buy(bot, update)
     if splitted_user_answer[0] == "stats":
+        return buy_stats(bot, update)
+    if splitted_user_answer[0] == "check":
         return buy_stats(bot, update)
 
 def buy_stats(abot, aupdate):
@@ -105,12 +107,12 @@ def gender(bot, update):
 def age(bot, update):
     user = update.message.from_user
     db.profiles.update_one({"profile_id": update['message']['chat']['id']},{"$set": {"age": update.message.text}})
-    update.message.reply_text('Rate your previous credit experience from 1 to 5 (0 if you have no experience)')
-    return CREDIT_EXP
+    update.message.reply_text('Your occupation (1 - Employee, 2 - Enterpreneur, 0 - Unemployed)')
+    return OCCUPATION
 
-def credit_exp(bot, update):
+def occupation(bot, update):
     user = update.message.from_user
-    db.profiles.update_one({"profile_id": update['message']['chat']['id']},{"$set": {"credit_exp": update.message.text}})
+    db.profiles.update_one({"profile_id": update['message']['chat']['id']},{"$set": {"occupation": update.message.text}})
     update.message.reply_text('Rate how good you save your money from 1 to 5 (0 if you do not save)')
     return SAVE_MONEY
 
@@ -122,10 +124,10 @@ def save_money(bot, update):
     social_status = db.profiles.find_one({"profile_id": update['message']['chat']['id']})["social_status"]
     gender = db.profiles.find_one({"profile_id": update['message']['chat']['id']})["gender"]
     age = db.profiles.find_one({"profile_id": update['message']['chat']['id']})["age"]
-    credit_exp = db.profiles.find_one({"profile_id": update['message']['chat']['id']})["credit_exp"]
+    occupation = db.profiles.find_one({"profile_id": update['message']['chat']['id']})["occupation"]
     
     update.message.reply_text("Here is your rating for financial literacy (minimum is 1, maximum is 5)")
-    update.message.reply_text(tw.clf.predict([[monthly_income,social_status,gender,age,credit_exp]])[0])
+    update.message.reply_text(tw.clf.predict([[age,monthly_income,occupation,social_status]])[0])
     return ConversationHandler.END
 
 def cancel(bot, update):
@@ -157,7 +159,7 @@ def main():
             SOCIAL_STATUS: [MessageHandler(Filters.text, social_status)],
             GENDER: [MessageHandler(Filters.text, gender)],
             AGE: [MessageHandler(Filters.text, age)],
-            CREDIT_EXP: [MessageHandler(Filters.text, credit_exp)],
+            OCCUPATION: [MessageHandler(Filters.text, occupation)],
             SAVE_MONEY: [MessageHandler(Filters.text, save_money)],
             ROUTER: [MessageHandler(Filters.text, router)]
         },
