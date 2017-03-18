@@ -20,18 +20,18 @@ numpy.random.seed(seed)
 #X_test = dataset_test[:,0:2].astype(float)
 #Y_test = dataset_test[:,2]
 
-dataset = numpy.genfromtxt ('../r-calculations/k-means/output16_2dim.csv', delimiter=",")
-X = dataset[:,0:2].astype(float)
-Y = dataset[:,2]
+dataset = numpy.genfromtxt ('../r-calculations/k-means/output16.csv', delimiter=",")
+X = dataset[:,0:4].astype(float)
+Y = dataset[:,4]
 print(Y[0])
 #Y = np_utils.to_categorical(Y)
 
 # create model
 model = Sequential()
-model.add(Dense(2, input_dim=2, init='normal', activation='relu'))
+model.add(Dense(4, input_dim=4, init='normal', activation='relu'))
 #model.add(Dropout(0.20))
 model.add(Dense(13, activation='relu', init='normal'))
-model.add(Dense(13, init='normal', activation='sigmoid'))
+model.add(Dense(17, init='normal', activation='sigmoid'))
 # Compile model
 #model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
@@ -48,7 +48,7 @@ model.fit(X,Y, epochs=20, batch_size=5)
 #print( model.predict(numpy.array(X[2]).reshape((1,4))) )
 
 for x in xrange(1,10):
-	result = model.predict_classes(numpy.array(X[x]).reshape((1,2)))
+	result = model.predict_classes(numpy.array(X[x]).reshape((1,4)))
 	print(result)
 
 #score, acc = model.evaluate(X_test, Y_test,
