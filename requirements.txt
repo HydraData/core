@@ -2,7 +2,7 @@ ChatterBot==0.4.10
 Cheetah==2.4.4
 Landscape-Client==14.12
 PAM==0.4.2
-Pillow==2.3.0
+Pillow==8.1.1
 PyYAML==3.10
 Twisted-Core==13.2.0
 Twisted-Names==13.2.0
