@@ -20,7 +20,7 @@ decorator==3.4.0
 elasticsearch==1.4.0
 future==0.16.0
 fuzzywuzzy==0.12.0
-html5lib==0.999
+html5lib==0.999999999
 joblib==0.8.4
 jsondatabase==0.1.1
 jsonpatch==1.3
