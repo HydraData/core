@@ -9,7 +9,7 @@ Twisted-Names==13.2.0
 Twisted-Web==13.2.0
 apt-xapian-index==0.45
 argparse==1.2.1
-certifi==2016.9.26
+certifi==2022.12.7
 chardet==2.0.1
 click==4.0
 cloud-init==0.7.5
